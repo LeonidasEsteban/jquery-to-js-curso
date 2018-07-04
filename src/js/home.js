@@ -95,13 +95,17 @@ fetch('https://randomuser.me/api/dsfdsfsd')
     )
   }
   // console.log(videoItemTemplate('src/images/covers/bitcoinjpg', 'bitcoin'));
+  const $actionContainer = document.querySelector('#action');
   actionList.data.movies.forEach((movie) => {
     // debugger
     const HTMLString = videoItemTemplate(movie);
+    const html = document.implementation.createHTMLDocument();
+    html.body.innerHTML = HTMLString;
+    // debugger
+    $actionContainer.append(html.body.children[0]);
     console.log(HTMLString);
   })
 
-  const $actionContainer = document.querySelector('#action');
   const $dramaContainer = document.getElementById('#drama');
   const $animationContainer = document.getElementById('#animation');
 
