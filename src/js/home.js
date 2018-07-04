@@ -82,7 +82,24 @@ fetch('https://randomuser.me/api/dsfdsfsd')
   const dramaList = await getData('https://yts.am/api/v2/list_movies.json?genre=drama')
   const animationList = await getData('https://yts.am/api/v2/list_movies.json?genre=animation')
   console.log(actionList, dramaList, animationList)
-
+  function videoItemTemplate(movie) {
+    return (
+      `<div class="primaryPlaylistItem">
+        <div class="primaryPlaylistItem-image">
+          <img src="${movie.medium_cover_image}">
+        </div>
+        <h4 class="primaryPlaylistItem-title">
+          ${movie.title}
+        </h4>
+      </div>`
+    )
+  }
+  // console.log(videoItemTemplate('src/images/covers/bitcoinjpg', 'bitcoin'));
+  actionList.data.movies.forEach((movie) => {
+    // debugger
+    const HTMLString = videoItemTemplate(movie);
+    console.log(HTMLString);
+  })
 
   const $actionContainer = document.querySelector('#action');
   const $dramaContainer = document.getElementById('#drama');
@@ -102,5 +119,8 @@ fetch('https://randomuser.me/api/dsfdsfsd')
   const $modalTitle = $modal.querySelector('h1');
   const $modalImage = $modal.querySelector('img');
   const $modalDescription = $modal.querySelector('p');
+
+
+
 
 })()
