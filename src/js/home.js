@@ -176,19 +176,30 @@ fetch('https://randomuser.me/api/dsfdsfsd')
     })
   }
 
+  async function cacheExist(category) {
+    const listName = `${category}List`;
+    const cacheList = window.localStorage.getItem(listName);
 
-  const { data: { movies: actionList} } = await getData(`${BASE_API}list_movies.json?genre=action`)
-  window.localStorage.setItem('actionList', JSON.stringify(actionList))
+    if (cacheList) {
+      return JSON.parse(cacheList);
+    }
+    const { data: { movies: data } } = await getData(`${BASE_API}list_movies.json?genre=${category}`)
+    window.localStorage.setItem(listName, JSON.stringify(data))
+
+    return data;
+  }
+
+  // const { data: { movies: actionList} } = await getData(`${BASE_API}list_movies.json?genre=action`)
+  const actionList = await cacheExist('action');
+  // window.localStorage.setItem('actionList', JSON.stringify(actionList))
   const $actionContainer = document.querySelector('#action');
   renderMovieList(actionList, $actionContainer, 'action');
 
-  const { data: { movies: dramaList } } = await getData(`${BASE_API}list_movies.json?genre=drama`)
-  window.localStorage.setItem('dramaList', JSON.stringify(actionList))
+  const dramaList = await await cacheExist('drama');
   const $dramaContainer = document.getElementById('drama');
   renderMovieList(dramaList, $dramaContainer, 'drama');
 
-  const { data: { movies: animationList } } = await getData(`${BASE_API}list_movies.json?genre=animation`)
-  window.localStorage.setItem('animationList', JSON.stringify(actionList))
+  const animationList = await await cacheExist('animation');
   const $animationContainer = document.getElementById('animation');
   renderMovieList(animationList, $animationContainer, 'animation');
 
